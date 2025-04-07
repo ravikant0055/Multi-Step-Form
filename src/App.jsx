@@ -8,12 +8,12 @@ import UploadResume from "./components/Pages/UploadResume"
 function App() {
   return (
     <>
-      <UploadResume/>
-      {/* <BasicInfo/> */}
-      {/* <AddSkills/> */}
-      {/* <AddEducation/> */}
-      {/* <Summary/> */}
-      {/* <Completed/> */}
+      {/* <UploadResume/> */}
+      <BasicInfo/>
+      <AddSkills/>
+      <AddEducation/>
+      <Summary/>
+      <Completed/>
     </>
   )
 }

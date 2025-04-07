@@ -3,8 +3,13 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
 import { MdOutlineFileDownload } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
 const Summary = () => {
+  const myskills = useSelector((state) => state.form.skills);
+  const myEducation = useSelector((state) => state.form.educations);
+  const myInfo = useSelector((state) => state.form.basicInfo);
+    
   return (
     <div className="flex flex-col gap-12 py-20 px-36">
       
@@ -32,21 +37,21 @@ const Summary = () => {
         <div className="flex gap-5 w-[70%]">
           <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
             First Name
-            <h1 className="text-[14px] font-[500] text-black">Willaam</h1>
+            <h1 className="text-[14px] font-[500] text-black">{myInfo.firstname}</h1>
           </Label>
           <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
             Last Name
-            <h1 className="text-[14px] font-[500] text-black">Willaam</h1>
+            <h1 className="text-[14px] font-[500] text-black">{myInfo.lastname}</h1>
           </Label>
         </div>
         <div className="flex gap-5 w-[70%]">
           <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
             Email Address
-            <h1 className="text-[14px] font-[500] text-black">Willaam</h1>
+            <h1 className="text-[14px] font-[500] text-black">{myInfo.email}</h1>
           </Label>
           <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
             Contact
-            <h1 className="text-[14px] font-[500] text-black">Willaam</h1>
+            <h1 className="text-[14px] font-[500] text-black">{myInfo.contact}</h1>
           </Label>
         </div>
       </div>
@@ -57,15 +62,17 @@ const Summary = () => {
 
       {/* Skills */}
       <h1 className="text-xl font-[500]">Skill Sets</h1>
-      <div className="flex gap-5 w-[70%]">
-        <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-          Skill 1<h1 className="text-[14px] font-[500] text-black">HTML5</h1>
-        </Label>
-        <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-          Experience Level
-          <h1 className="text-[14px] font-[500] text-black">Intermediate</h1>
-        </Label>
-      </div>
+      {myskills.map((item,index)=>(
+        <div key={index} className="flex gap-5 w-[70%]">
+            <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
+            Skill {index}<h1 className="text-[14px] font-[500] text-black">{item.skill}</h1>
+            </Label>
+            <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
+            Experience Level
+            <h1 className="text-[14px] font-[500] text-black">{item.experience}</h1>
+            </Label>
+        </div>
+      ))}
 
       <div className="flex py-5">
         <div className="h-[1px] w-full bg-gray-300" />
@@ -73,26 +80,28 @@ const Summary = () => {
 
       {/* Education */}
       <h1 className="text-xl font-[500]">Education</h1>
-      <div className="flex gap-5 w-[70%]">
-        <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-          Degree Name
-          <h1 className="text-[14px] font-[500] text-black">BSC</h1>
-        </Label>
-        <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-          University
-          <h1 className="text-[14px] font-[500] text-black">
-            Greenfield University
-          </h1>
-        </Label>
-        <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-          Year of Starting
-          <h1 className="text-[14px] font-[500] text-black">2018</h1>
-        </Label>
-        <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-          Year of Completion
-          <h1 className="text-[14px] font-[500] text-black">2021</h1>
-        </Label>
-      </div>
+      {myEducation.map((item,index)=>(
+        <div key={index} className="flex gap-5 w-[70%]">
+            <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
+            Degree Name
+            <h1 className="text-[14px] font-[500] text-black">{item.degree}</h1>
+            </Label>
+            <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
+            University
+            <h1 className="text-[14px] font-[500] text-black">
+            {item.university}
+            </h1>
+            </Label>
+            <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
+            Year of Starting
+            <h1 className="text-[14px] font-[500] text-black">{item.startDate}</h1>
+            </Label>
+            <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
+            Year of Completion
+            <h1 className="text-[14px] font-[500] text-black">{item.endDate}</h1>
+            </Label>
+        </div>
+      ))}
 
       <div className="flex py-5">
         <div className="h-[1px] w-full bg-gray-300" />
