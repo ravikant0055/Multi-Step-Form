@@ -24,8 +24,13 @@ const FormSchema = z.object({
     university: z.string().min(1, {
       message: "Min length-1 characters",
     }),
+    startDate: z.date({
+      required_error: "startDate is required.",
+    }),
+    endDate: z.date({
+      required_error: "endDate is required.",
+    }),
   })
-
 
 const AddEducation = ({currentStep, setCurrentStep}) => {
   const dispatch = useDispatch(); 
@@ -44,9 +49,10 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
   }); 
   
   const submitEducation = (formData) => {
+    console.log("education",formData);
     const startYear = formData.startDate ? new Date(formData.startDate).getFullYear() : null;
     const endYear = formData.endDate ? new Date(formData.endDate).getFullYear() : null;
-    dispatch(addEducation({...formData,startYear,endYear })); 
+    dispatch(addEducation({degree:formData.degree, university:formData.university,startDate:startYear ,endDate:endYear })); 
   };
 
   const handleDelete = (id) =>{
@@ -91,7 +97,11 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                     <FormLabel className="text-black/60">Degree</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${form.formState.errors.degree ? 'border-red-500 border' : 'border-none'}`}
+                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                          form.formState.errors.degree
+                            ? "border-red-500 border"
+                            : "border-none"
+                        }`}
                         {...field}
                       />
                     </FormControl>
@@ -113,7 +123,11 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${form.formState.errors.university ? 'border-red-500 border' : 'border-none'}`}
+                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                          form.formState.errors.university
+                            ? "border-red-500 border"
+                            : "border-none"
+                        }`}
                         {...field}
                       />
                     </FormControl>
@@ -127,7 +141,7 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
               />
             </div>
             <div className="flex gap-5 w-[70%]">
-              <FormField
+               <FormField
                 control={form.control}
                 name="startDate"
                 render={({ field }) => (
@@ -139,7 +153,7 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              "rounded-none py-6 autofocus-none border-none bg-[#f7f7f7] text-left",
+                              `rounded-none py-6 autofocus-none ${form.formState.errors.startDate? "border-red-500 border": "border-none"} bg-[#f7f7f7] text-left`,
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -153,6 +167,11 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                         </FormControl>
                         
                       </PopoverTrigger>
+                      {form.formState.errors.startDate && (
+                      <span className="text-red-500 text-sm">
+                        {form.formState.errors.startDate.message}
+                      </span>
+                      )}
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
@@ -167,7 +186,8 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                     </Popover>
                   </FormItem>
                 )}
-              />
+              /> 
+             
               <FormField
                 control={form.control}
                 name="endDate"
@@ -180,8 +200,8 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                             "rounded-none py-6 autofocus-none border-none bg-[#f7f7f7] text-left",
-                             !field.value && "text-muted-foreground"
+                              `rounded-none py-6 autofocus-none ${form.formState.errors.endDate? "border-red-500 border": "border-none"} bg-[#f7f7f7] text-left`,
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             {field.value ? (
@@ -193,6 +213,11 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
+                      {form.formState.errors.endDate && (
+                        <span className="text-red-500 text-sm">
+                          {form.formState.errors.endDate.message}
+                        </span>
+                      )}
                       <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
@@ -212,13 +237,19 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
 
             {/* Educations */}
             <div className="flex flex-col gap-5 max-h-[200px] w-fit overflow-y-auto">
-              {myEducation.map((item,index)=>( 
-                <div key={index} className="flex justify-between items-center gap-2 text-[13px] border px-4 py-3 text-[black/60] font-[300]">
-                    <MdOutlineDragIndicator className="text-xl text-[#f66136] cursor-pointer" />{" "}
-                     {`${item.degree}-${item.university} (${item.startDate}-${item.endDate})`}
-                    <IoMdClose onClick={()=>handleDelete(index)} className="text-xl text-black/70 cursor-pointer" />
+              {myEducation.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex justify-between items-center gap-2 text-[13px] border px-4 py-3 text-[black/60] font-[300]"
+                >
+                  <MdOutlineDragIndicator className="text-xl text-[#f66136] cursor-pointer" />{" "}
+                  {`${item.degree}-${item.university} (${item.startDate}-${item.endDate})`}
+                  <IoMdClose
+                    onClick={() => handleDelete(index)}
+                    className="text-xl text-black/70 cursor-pointer"
+                  />
                 </div>
-              ))} 
+              ))}
             </div>
 
             <div className="flex flex-col gap-2 mt-5 w-[70%]">
@@ -231,16 +262,18 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
             </div>
           </div>
           <div className="flex justify-end items-end h-[100px] gap-4">
-            <Button 
-            type="button"
-            onClick={handleBackClick}
-            className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
+            <Button
+              type="button"
+              onClick={handleBackClick}
+              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6"
+            >
               BACK
             </Button>
             <Button
-            type="button"
-            onClick={handleNextClick}
-            className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
+              type="button"
+              onClick={handleNextClick}
+              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
+            >
               NEXT
             </Button>
           </div>
