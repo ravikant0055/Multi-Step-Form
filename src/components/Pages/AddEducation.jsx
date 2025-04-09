@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
@@ -15,6 +15,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch, useSelector } from 'react-redux';
 import { addEducation, deleteEducation } from '../../store/formSlice';
+import { useNavigate } from 'react-router-dom';
 
 const FormSchema = z.object({
     degree: z.string().min(1, {
@@ -26,8 +27,9 @@ const FormSchema = z.object({
   })
 
 
-const AddEducation = () => {
+const AddEducation = ({currentStep, setCurrentStep}) => {
   const dispatch = useDispatch(); 
+  const navigate = useNavigate(); 
   const myEducation = useSelector((state) => state.form.educations);
   console.log("edu info", myEducation);
 
@@ -51,8 +53,28 @@ const AddEducation = () => {
     dispatch(deleteEducation(id));
   }
 
+  const handleNextClick = () => {
+    console.log("Next button click");
+    setCurrentStep(5); 
+    navigate("/summary");
+  };
+
+  const handleBackClick = () => {
+    setCurrentStep(3); 
+    navigate("/skill");
+  };
+  
+  useEffect(() => {
+    if (currentStep === 5) {
+      navigate("/summary");
+    } else if (currentStep === 3) {
+      navigate("/skill");
+    }
+  }, [currentStep, navigate]);
+  
+
   return (
-    <div className="flex flex-col gap-12 py-20 px-36">
+    <div className="flex flex-col gap-12 py-5 px-36">
       <h1 className="text-xl font-[500]">Add Education</h1>
       <Form {...form}>
         <form
@@ -208,11 +230,17 @@ const AddEducation = () => {
               </Button>
             </div>
           </div>
-          <div className="flex justify-end items-end h-[140px] gap-4">
-            <Button className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
+          <div className="flex justify-end items-end h-[100px] gap-4">
+            <Button 
+            type="button"
+            onClick={handleBackClick}
+            className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
               BACK
             </Button>
-            <Button className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
+            <Button
+            type="button"
+            onClick={handleNextClick}
+            className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
               NEXT
             </Button>
           </div>

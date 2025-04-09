@@ -1,17 +1,37 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
 import { MdOutlineFileDownload } from "react-icons/md";
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-const Summary = () => {
+const Summary = ({currentStep,setCurrentStep}) => {
+  const navigate = useNavigate(); 
   const myskills = useSelector((state) => state.form.skills);
   const myEducation = useSelector((state) => state.form.educations);
   const myInfo = useSelector((state) => state.form.basicInfo);
+
+  const handleNextClick = () => {
+    setCurrentStep(6); 
+    navigate("/complete");
+  };
+
+  const handleBackClick = () => {
+    setCurrentStep(1); 
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (currentStep === 6) {
+      navigate("/complete");
+    } else if (currentStep === 1) {
+      navigate("/");
+    }
+  }, [currentStep, navigate]);
     
   return (
-    <div className="flex flex-col gap-12 py-20 px-36">
+    <div className="flex flex-col gap-12 py-5 px-36">
       
       <h1 className="text-2xl font-[500]">Summary</h1>
 
@@ -27,7 +47,7 @@ const Summary = () => {
         </Label>
       </div>
 
-      <div className="flex py-5">
+      <div className="flex py-2">
         <div className="h-[1px] w-full bg-gray-300" />
       </div>
 
@@ -56,7 +76,7 @@ const Summary = () => {
         </div>
       </div>
 
-      <div className="flex py-5">
+      <div className="flex py-2">
         <div className="h-[1px] w-full bg-gray-300" />
       </div>
 
@@ -65,7 +85,7 @@ const Summary = () => {
       {myskills.map((item,index)=>(
         <div key={index} className="flex gap-5 w-[70%]">
             <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
-            Skill {index}<h1 className="text-[14px] font-[500] text-black">{item.skill}</h1>
+            Skill {index+1}<h1 className="text-[14px] font-[500] text-black">{item.skill}</h1>
             </Label>
             <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
             Experience Level
@@ -74,7 +94,7 @@ const Summary = () => {
         </div>
       ))}
 
-      <div className="flex py-5">
+      <div className="flex py-2">
         <div className="h-[1px] w-full bg-gray-300" />
       </div>
 
@@ -88,7 +108,7 @@ const Summary = () => {
             </Label>
             <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
             University
-            <h1 className="text-[14px] font-[500] text-black">
+            <h1 className="text-[14px] font-[500] text-black text-nowrap">
             {item.university}
             </h1>
             </Label>
@@ -103,7 +123,7 @@ const Summary = () => {
         </div>
       ))}
 
-      <div className="flex py-5">
+      <div className="flex py-2">
         <div className="h-[1px] w-full bg-gray-300" />
       </div>
        
@@ -120,10 +140,16 @@ const Summary = () => {
       </div>
 
       <div className="flex h-[140px] gap-4">
-        <Button className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[60px] py-6">
+        <Button 
+         type="button"
+         onClick={handleBackClick}
+         className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[60px] py-6">
           EDIT
         </Button>
-        <Button className="bg-[#f66136] rounded-sm text-white px-[55px] py-6">
+        <Button 
+           type="button"
+           onClick={handleNextClick}
+          className="bg-[#f66136] rounded-sm text-white px-[55px] py-6">
           CONFIRM
         </Button>
       </div>

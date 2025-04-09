@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -16,6 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch, useSelector } from "react-redux";
 import { setBasicInfo } from "../../store/formSlice";
+import { useNavigate } from "react-router-dom";
 
 const FormSchema = z.object({
     firstname: z.string().min(3, {
@@ -29,8 +30,9 @@ const FormSchema = z.object({
     }),
   })
 
-const BasicInfo = () => {
+const BasicInfo = ({currentStep,setCurrentStep}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
   const myinfo = useSelector((state) => state.form.basicInfo);
   console.log("basic info", myinfo);
 
@@ -48,8 +50,28 @@ const BasicInfo = () => {
     dispatch(setBasicInfo(formData));
   };
 
+
+  const handleNextClick = () => {
+    setCurrentStep(3); 
+    navigate("/skill");
+  };
+
+  const handleBackClick = () => {
+    setCurrentStep(1); 
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (currentStep === 3) {
+      navigate("/skill");
+    } else if (currentStep === 1) {
+      navigate("/");
+    }
+  }, [currentStep, navigate]);
+
+
   return (
-    <div className="flex flex-col gap-12 py-20 px-36">
+    <div className="flex flex-col gap-12 py-5 px-36">
       <h1 className="text-xl font-[500]">Basic Information</h1>
       <Form {...form}>
         <form
@@ -171,13 +193,15 @@ const BasicInfo = () => {
           </div>
 
           <div className="flex justify-end items-end h-[140px] gap-4">
-            <Button className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
+            <Button
+              onClick={handleBackClick}
+              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
               BACK
             </Button>
             <Button
+              onClick={handleNextClick}
               type="submit"
-              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
-            >
+              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
               NEXT
             </Button>
           </div>

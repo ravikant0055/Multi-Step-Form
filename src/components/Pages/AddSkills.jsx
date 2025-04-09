@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -19,6 +19,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch, useSelector } from "react-redux";
 import { addSkill, deleteSkill } from "../../store/formSlice";
+import { useNavigate } from "react-router-dom";
 
 const FormSchema = z.object({
     skill: z.string().min(2, {
@@ -29,8 +30,9 @@ const FormSchema = z.object({
     }),
   })
 
-const AddSkills = () => {
+const AddSkills = ({currentStep,setCurrentStep}) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate(); 
   const myskills = useSelector((state) => state.form.skills);
   console.log("Skill info", myskills);
 
@@ -51,8 +53,26 @@ const AddSkills = () => {
     dispatch(deleteSkill(id));
   }
 
+  const handleNextClick = () => {
+    setCurrentStep(4); 
+    navigate("/education");
+  };
+
+  const handleBackClick = () => {
+    setCurrentStep(2); 
+    navigate("/information");
+  };
+
+  useEffect(() => {
+    if (currentStep === 4) {
+      navigate("/education");
+    } else if (currentStep === 2) {
+      navigate("/information");
+    }
+  }, [currentStep, navigate]);
+
   return (
-    <div className="flex flex-col gap-12 py-20 px-36">
+    <div className="flex flex-col gap-12 py-5 px-36">
       <h1 className="text-xl font-[500]">Add Skill Sets</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(submitSkill)} className="space-y-8">
@@ -140,10 +160,16 @@ const AddSkills = () => {
             </div>
           </div>
           <div className="flex justify-end items-end h-[140px] gap-4">
-            <Button className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
+            <Button
+             type="button"
+             onClick={handleBackClick}
+             className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
               BACK
             </Button>
-            <Button className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
+            <Button 
+            type="button"
+            onClick={handleNextClick}
+            className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
               NEXT
             </Button>
           </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import { Button } from '../ui/button'
 const Completed = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen py-20 px-36">
+    <div className="flex flex-col items-center justify-center min-h-[550px] px-36">
         <div className='flex flex-col items-center gap-5'>
             <h1 className='text-[26px] font-[500]'><span className='text-[#f66136]'>Great!</span> Thank You for Applying</h1>
             <p className='text-black/50 text-center'> 
