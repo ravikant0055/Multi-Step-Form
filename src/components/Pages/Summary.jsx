@@ -3,32 +3,26 @@ import { Label } from '../ui/label';
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
 import { MdOutlineFileDownload } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { setCurrentStep } from '../../store/formSlice';
 
-const Summary = ({currentStep,setCurrentStep}) => {
+const Summary = () => {
   const navigate = useNavigate(); 
+  const dispatch = useDispatch(); 
   const myskills = useSelector((state) => state.form.skills);
   const myEducation = useSelector((state) => state.form.educations);
   const myInfo = useSelector((state) => state.form.basicInfo);
 
   const handleNextClick = () => {
-    setCurrentStep(6); 
+    dispatch(setCurrentStep(6)); 
     navigate("/complete");
   };
 
   const handleBackClick = () => {
-    setCurrentStep(1); 
+    dispatch(setCurrentStep(1)); 
     navigate("/");
   };
-
-  useEffect(() => {
-    if (currentStep === 6) {
-      navigate("/complete");
-    } else if (currentStep === 1) {
-      navigate("/");
-    }
-  }, [currentStep, navigate]);
     
   return (
     <div className="flex flex-col gap-12 py-5 px-36">

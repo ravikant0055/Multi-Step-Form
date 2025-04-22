@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { arrayMove } from '@dnd-kit/sortable';
 
 const initialState = {
+  currentStep: 1,
   basicInfo: {
     firstname: '',
     lastname: '',
@@ -16,6 +17,9 @@ const formSlice = createSlice({
   name: 'form',
   initialState,
   reducers: {
+    setCurrentStep: (state, action) => {
+      state.currentStep = action.payload;
+    },
     setBasicInfo: (state, action) => {
       state.basicInfo = action.payload;
     },
@@ -37,6 +41,6 @@ const formSlice = createSlice({
   },
 });
 
-export const { setBasicInfo, addEducation,deleteEducation, addSkill,deleteSkill,reorderSkills } = formSlice.actions;
+export const { setCurrentStep, setBasicInfo, addEducation,deleteEducation, addSkill,deleteSkill,reorderSkills } = formSlice.actions;
 
 export default formSlice.reducer;

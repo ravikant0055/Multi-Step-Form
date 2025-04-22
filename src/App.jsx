@@ -8,49 +8,24 @@ import "./App.css";
 import Main from "./components/Main";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/Pages/ErrorPage";
-import { useState } from "react";
 
 function App() {
-  const [currentStep, setCurrentStep] = useState(1);
-
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <Main currentStep={currentStep} setCurrentStep={setCurrentStep} />,
+      element: <Main  />,
       errorElement: <ErrorPage />,
       children: [
-        {
-          index: true,
-          element: <UploadResume currentStep={currentStep} setCurrentStep={setCurrentStep} />,
-        },
-        {
-          path: "upload",  
-          element: <UploadResume currentStep={currentStep} setCurrentStep={setCurrentStep} />,
-        },
-        {
-          path: "information",  
-          element: <BasicInfo currentStep={currentStep} setCurrentStep={setCurrentStep}/>,
-        },
-        {
-          path: "skill",  
-          element: <AddSkills currentStep={currentStep} setCurrentStep={setCurrentStep}/>,
-        },
-        {
-          path: "education",  
-          element: <AddEducation currentStep={currentStep} setCurrentStep={setCurrentStep}/>,
-        },
-        {
-          path: "summary",  
-          element: <Summary currentStep={currentStep} setCurrentStep={setCurrentStep}/>,
-        },
-        {
-          path: "complete",  
-          element: <Completed />,
-        },
+        { index: true, element: <UploadResume /> },
+        { path: "upload", element: <UploadResume /> },
+        { path: "information", element: <BasicInfo /> },
+        { path: "skill", element: <AddSkills /> },
+        { path: "education", element: <AddEducation /> },
+        { path: "summary", element: <Summary /> },
+        { path: "complete", element: <Completed /> },
       ],
     },
   ]);
-
   return <RouterProvider router={router} />;
 }
 

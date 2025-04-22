@@ -14,7 +14,7 @@ import { format } from 'date-fns';
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch, useSelector } from 'react-redux';
-import { addEducation, deleteEducation } from '../../store/formSlice';
+import { addEducation, deleteEducation, setCurrentStep } from '../../store/formSlice';
 import { useNavigate } from 'react-router-dom';
 
 const FormSchema = z.object({
@@ -32,7 +32,7 @@ const FormSchema = z.object({
     }),
   })
 
-const AddEducation = ({currentStep, setCurrentStep}) => {
+const AddEducation = () => {
   const dispatch = useDispatch(); 
   const navigate = useNavigate(); 
   const myEducation = useSelector((state) => state.form.educations);
@@ -61,22 +61,14 @@ const AddEducation = ({currentStep, setCurrentStep}) => {
 
   const handleNextClick = () => {
     console.log("Next button click");
-    setCurrentStep(5); 
+    dispatch(setCurrentStep(5)); 
     navigate("/summary");
   };
 
   const handleBackClick = () => {
-    setCurrentStep(3); 
+    dispatch(setCurrentStep(3)); 
     navigate("/skill");
   };
-  
-  useEffect(() => {
-    if (currentStep === 5) {
-      navigate("/summary");
-    } else if (currentStep === 3) {
-      navigate("/skill");
-    }
-  }, [currentStep, navigate]);
   
 
   return (

@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { TiTick } from "react-icons/ti";
 import { TbPointFilled } from "react-icons/tb";
 import { Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const Main = ({ currentStep, setCurrentStep }) => {
+const Main = () => {
+  const currentStep = useSelector((state) => state.form.currentStep);
   
   const steps = [
     "Upload Resume",
@@ -16,7 +18,7 @@ const Main = ({ currentStep, setCurrentStep }) => {
 
   useEffect(() => {
     console.log("Current step updated to: ", currentStep);
-  }, [currentStep,setCurrentStep]);
+  }, [currentStep]);
 
   return (
     <div className="flex flex-col gap-10 py-20 px-36">

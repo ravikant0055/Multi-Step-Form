@@ -18,7 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch, useSelector } from "react-redux";
-import { addSkill, deleteSkill } from "../../store/formSlice";
+import { addSkill, deleteSkill, setCurrentStep } from "../../store/formSlice";
 import { useNavigate } from "react-router-dom";
 
 const FormSchema = z.object({
@@ -30,7 +30,7 @@ const FormSchema = z.object({
     }),
   })
 
-const AddSkills = ({currentStep,setCurrentStep}) => {
+const AddSkills = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const myskills = useSelector((state) => state.form.skills);
@@ -54,22 +54,14 @@ const AddSkills = ({currentStep,setCurrentStep}) => {
   }
 
   const handleNextClick = () => {
-    setCurrentStep(4); 
+    dispatch(setCurrentStep(4)); 
     navigate("/education");
   };
 
   const handleBackClick = () => {
-    setCurrentStep(2); 
+    dispatch(setCurrentStep(2)); 
     navigate("/information");
   };
-
-  useEffect(() => {
-    if (currentStep === 4) {
-      navigate("/education");
-    } else if (currentStep === 2) {
-      navigate("/information");
-    }
-  }, [currentStep, navigate]);
 
   return (
     <div className="flex flex-col gap-12 py-5 px-36">

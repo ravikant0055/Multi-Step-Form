@@ -5,23 +5,18 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import pdfimage from "../../assets/pdf.svg";
 import { TbLoader } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentStep } from "../../store/formSlice";
 
-const UploadResume = ({currentStep, setCurrentStep }) => {
+const UploadResume = () => {
 
   const navigate = useNavigate(); 
+  const dispatch = useDispatch();
 
   const handleNextClick = () => {
-    setCurrentStep(2); 
+    dispatch(setCurrentStep(2)); 
     navigate("/information");
   };
-
-  useEffect(() => {
-    if (currentStep === 2) {
-      navigate("/information");
-    } else if (currentStep === 1) {
-      navigate("/");
-    }
-  }, [currentStep, navigate]);
 
   return (
     <div className="flex flex-col py-5 px-36">
