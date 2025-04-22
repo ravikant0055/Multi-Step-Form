@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
@@ -17,6 +17,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useDispatch, useSelector } from "react-redux";
 import { setBasicInfo, setCurrentStep } from "../../store/formSlice";
 import { useNavigate } from "react-router-dom";
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css';
 
 const FormSchema = z.object({
     firstname: z.string().min(3, {
@@ -28,9 +30,13 @@ const FormSchema = z.object({
     email: z.string().email({
         message: "Enter valid email id",
     }),
+    contact: z.string().min(10, { 
+      message: "Enter a valid phone number"
+    }),
   })
 
 const BasicInfo = () => {
+  const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const myinfo = useSelector((state) => state.form.basicInfo);
@@ -48,10 +54,6 @@ const BasicInfo = () => {
 
   const submitBasicInfo = (formData) => {
     dispatch(setBasicInfo(formData));
-  };
-
-
-  const handleNextClick = () => {
     dispatch(setCurrentStep(3));
     navigate("/skill");
   };
@@ -79,7 +81,11 @@ const BasicInfo = () => {
                     <FormLabel className="text-black/60">First Name</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${form.formState.errors.firstname ? 'border-red-500 border' : 'border-none'}`}
+                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                          form.formState.errors.firstname
+                            ? "border-red-500 border"
+                            : "border-none"
+                        }`}
                         {...field}
                       />
                     </FormControl>
@@ -99,7 +105,11 @@ const BasicInfo = () => {
                     <FormLabel className="text-black/60">Last Name</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${form.formState.errors.lastname ? 'border-red-500 border' : 'border-none'}`}
+                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                          form.formState.errors.lastname
+                            ? "border-red-500 border"
+                            : "border-none"
+                        }`}
                         {...field}
                       />
                     </FormControl>
@@ -124,7 +134,11 @@ const BasicInfo = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none  bg-[#f7f7f7] ${form.formState.errors.email ? "border-red-500 border" : "border-none"}`}
+                        className={`rounded-none py-6 autofocus-none  bg-[#f7f7f7] ${
+                          form.formState.errors.email
+                            ? "border-red-500 border"
+                            : "border-none"
+                        }`}
                         {...field}
                       />
                     </FormControl>
@@ -144,39 +158,27 @@ const BasicInfo = () => {
                     <FormLabel className="text-black/60">Contact</FormLabel>
                     <FormControl>
                       <div className="flex rounded-lg rounded-e-none">
-                        <Select>
-                          <SelectTrigger className="w-[100px] rounded-lg rounded-e-none text-black py-6 autofocus-none border-none bg-[#ececec]">
-                            <SelectValue placeholder="Country" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectGroup className="space-y-2 w-[350px]">
-                              <SelectItem
-                                className="text-[15px]"
-                                value="beginner"
-                              >
-                                Beginner
-                              </SelectItem>
-                              <SelectItem
-                                className="text-[15px]"
-                                value="intermediate"
-                              >
-                                Intermediate
-                              </SelectItem>
-                              <SelectItem
-                                className="text-[15px]"
-                                value="expert"
-                              >
-                                Expert
-                              </SelectItem>
-                            </SelectGroup>
-                          </SelectContent>
-                        </Select>
-                        <Input
-                          {...field}
-                          className="rounded-none py-6 autofocus-none border-none bg-[#f7f7f7]"
+                        <PhoneInput
+                          country={"in"}
+                          value={field.value}
+                          onChange={(value) => {
+                            field.onChange(value);
+                          }}
+                          inputStyle={{
+                             padding: "24px 50px",
+                             backgroundColor: "#f7f7f7",
+                             border:"none",
+                             width:"100%"
+                          }}
+                          className={`rounded-none bg-[#f7f7f7] ${form.formState.errors.contact ? "border-red-500 border": "border-none"}`}
                         />
                       </div>
                     </FormControl>
+                    {form.formState.errors.contact && (
+                      <span className="text-red-500 text-sm">
+                        {form.formState.errors.contact.message}
+                      </span>
+                    )}
                   </FormItem>
                 )}
               />
@@ -186,13 +188,14 @@ const BasicInfo = () => {
           <div className="flex justify-end items-end h-[140px] gap-4">
             <Button
               onClick={handleBackClick}
-              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
+              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6"
+            >
               BACK
             </Button>
             <Button
-              onClick={handleNextClick}
               type="submit"
-              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
+              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
+            >
               NEXT
             </Button>
           </div>
