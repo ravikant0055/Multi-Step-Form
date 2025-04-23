@@ -122,9 +122,10 @@ const Summary = () => {
       </div>
        
       {/* Terms & Conditions  */}
+      
       <div className='flex flex-col gap-5'>
         <p className='text-[14px] text-black/80 font-[300]'>By submitting this form, you confirm that all information provided is accurate and complete to the best of your knowledge. Any false or misleading information may result in disqualification from the recruitment process or termination of employment if discovered later.</p>
-        <p className='text-[14px] text-black/80 font-[300]'>Submission of this form does not guarantee an interview or employment. Your personal data will be handled confidentially and used solely for recruitment purposes in accordance with Beyonds Labs LLC Privacy Policy.</p>
+        <p className='text-[14px] text-black/80 font-[300]'>Submission of this form does not guarantee an interview or employment. Your personal data will be handled confidentially and used solely for testing purposes in accordance with Ravi Kant Projects.</p>
         <div className='flex gap-3 mt-3 items-center'>
             <Checkbox id="terms" className="text-center"/>
             <label htmlFor="terms" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed">
