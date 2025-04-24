@@ -21,7 +21,7 @@ const Main = () => {
   }, [currentStep]);
 
   return (
-    <div className="flex flex-col gap-10 py-20 px-36">
+    <div className="flex flex-col gap-10 py-20 h-screen px-36 bg-gradient-to-b from-[#e6f6f6] to-[#e6e6e6]">
       {/* Step Indicators */}
       <div className="flex gap-5 justify-center">
         {steps.map((step, i) => (

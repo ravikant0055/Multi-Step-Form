@@ -81,7 +81,7 @@ const BasicInfo = () => {
                     <FormLabel className="text-black/60">First Name</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                        className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${
                           form.formState.errors.firstname
                             ? "border-red-500 border"
                             : "border-none"
@@ -105,7 +105,7 @@ const BasicInfo = () => {
                     <FormLabel className="text-black/60">Last Name</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                        className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${
                           form.formState.errors.lastname
                             ? "border-red-500 border"
                             : "border-none"
@@ -134,7 +134,7 @@ const BasicInfo = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none  bg-[#f7f7f7] ${
+                        className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${
                           form.formState.errors.email
                             ? "border-red-500 border"
                             : "border-none"
@@ -166,11 +166,11 @@ const BasicInfo = () => {
                           }}
                           inputStyle={{
                              padding: "24px 50px",
-                             backgroundColor: "#f7f7f7",
+                             backgroundColor: "white",
                              border:"none",
                              width:"100%"
                           }}
-                          className={`rounded-none bg-[#f7f7f7] ${form.formState.errors.contact ? "border-red-500 border": "border-none"}`}
+                          className={`rounded-none bg-[#ffffff] ${form.formState.errors.contact ? "border-red-500 border": "border-none"}`}
                         />
                       </div>
                     </FormControl>
@@ -188,13 +188,13 @@ const BasicInfo = () => {
           <div className="flex justify-end items-end h-[140px] gap-4">
             <Button
               onClick={handleBackClick}
-              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6"
+              className="text-[#064048] border border-[#064048]/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6"
             >
               BACK
             </Button>
             <Button
               type="submit"
-              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
+              className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] rounded-sm text-white px-[70px] py-6"
             >
               NEXT
             </Button>

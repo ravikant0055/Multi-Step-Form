@@ -89,7 +89,7 @@ const AddEducation = () => {
                     <FormLabel className="text-black/60">Degree</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                        className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${
                           form.formState.errors.degree
                             ? "border-red-500 border"
                             : "border-none"
@@ -115,7 +115,7 @@ const AddEducation = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${
+                        className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${
                           form.formState.errors.university
                             ? "border-red-500 border"
                             : "border-none"
@@ -145,7 +145,7 @@ const AddEducation = () => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              `rounded-none py-6 autofocus-none ${form.formState.errors.startDate? "border-red-500 border": "border-none"} bg-[#f7f7f7] text-left`,
+                              `rounded-none py-6 autofocus-none ${form.formState.errors.startDate? "border-red-500 border": "border-none"} bg-[#ffffff] text-left`,
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -154,7 +154,7 @@ const AddEducation = () => {
                             ) : (
                               <span>Pick a date</span>
                             )}
-                            <CalendarIcon className="text-[#f66136] ml-auto h-7 w-7" />
+                            <CalendarIcon className="text-[#0d707d] ml-auto h-7 w-7" />
                           </Button>
                         </FormControl>
                         
@@ -192,7 +192,7 @@ const AddEducation = () => {
                           <Button
                             variant={"outline"}
                             className={cn(
-                              `rounded-none py-6 autofocus-none ${form.formState.errors.endDate? "border-red-500 border": "border-none"} bg-[#f7f7f7] text-left`,
+                              `rounded-none py-6 autofocus-none ${form.formState.errors.endDate? "border-red-500 border": "border-none"} bg-[#ffffff] text-left`,
                               !field.value && "text-muted-foreground"
                             )}
                           >
@@ -201,7 +201,7 @@ const AddEducation = () => {
                             ) : (
                               <span>Pick a date</span>
                             )}
-                            <CalendarIcon className="text-[#f66136] ml-auto h-7 w-7" />
+                            <CalendarIcon className="text-[#0d707d] ml-auto h-7 w-7" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
@@ -232,9 +232,9 @@ const AddEducation = () => {
               {myEducation.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center gap-2 text-[13px] border px-4 py-3 text-[black/60] font-[300]"
+                  className="flex justify-between items-center bg-white  gap-2 text-[13px] border border-dashed border-black/30 px-4 py-3 text-[black/60] font-[300]"
                 >
-                  <MdOutlineDragIndicator className="text-xl text-[#f66136] cursor-pointer" />{" "}
+                  <MdOutlineDragIndicator className="text-xl text-[#064048] cursor-pointer" />{" "}
                   {`${item.degree}-${item.university} (${item.startDate}-${item.endDate})`}
                   <IoMdClose
                     onClick={() => handleDelete(index)}
@@ -247,7 +247,7 @@ const AddEducation = () => {
             <div className="flex flex-col gap-2 mt-5 w-[70%]">
               <Button
                 type="submit"
-                className="bg-[#f66136] w-fit rounded-sm text-white px-[50px] py-6"
+                className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] w-fit rounded-sm text-white px-[50px] py-6"
               >
                 Add <IoMdAdd />
               </Button>
@@ -257,7 +257,7 @@ const AddEducation = () => {
             <Button
               type="button"
               onClick={handleBackClick}
-              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6"
+              className="text-[#064048] border border-[#064048]/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6"
             >
               BACK
             </Button>
@@ -265,7 +265,7 @@ const AddEducation = () => {
               type="button"
               onClick={handleNextClick}
               disabled={myEducation.length === 0}
-              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
+              className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] rounded-sm text-white px-[70px] py-6"
             >
               NEXT
             </Button>

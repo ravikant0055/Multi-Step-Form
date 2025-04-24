@@ -71,7 +71,7 @@ const Summary = () => {
           {resumes.map((item,index)=>(
             <h1 key={index} className="flex  items-center gap-2 text-[14px] font-[500] text-black">
               {item.name}
-              <MdOutlineFileDownload onClick={() => handleDownload(item)} className="text-[#f66136] text-2xl cursor-pointer" />
+              <MdOutlineFileDownload onClick={() => handleDownload(item)} className="text-[#0f8493] text-2xl cursor-pointer" />
             </h1>
           ))}
         </Label>
@@ -226,13 +226,13 @@ const Summary = () => {
             <Button
               type="button"
               onClick={handleBackClick}
-              className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[60px] py-6"
+              className="text-[#064048] border border-[#064048]/50 shadow-none hover:text-white bg-white rounded-sm px-[68px] py-6"
             >
               EDIT
             </Button>
             <Button
               type="submit"
-              className="bg-[#f66136] rounded-sm text-white px-[55px] py-6"
+              className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] rounded-sm text-white px-[55px] py-6"
             >
               CONFIRM
             </Button>

@@ -78,7 +78,7 @@ const AddSkills = () => {
                     <FormLabel className="text-black/60">Add Skill</FormLabel>
                     <FormControl>
                       <Input
-                        className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${form.formState.errors.skill ? 'border-red-500 border' : 'border-none'}`}
+                        className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${form.formState.errors.skill ? 'border-red-500 border' : 'border-none'}`}
                         {...field}
                       />
                     </FormControl>
@@ -101,7 +101,7 @@ const AddSkills = () => {
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
-                        <SelectTrigger className={`rounded-none py-6 autofocus-none bg-[#f7f7f7] ${form.formState.errors.experience ? 'border-red-500 border' : 'border-none'}`}>
+                        <SelectTrigger className={`rounded-none py-6 autofocus-none bg-[#ffffff] ${form.formState.errors.experience ? 'border-red-500 border' : 'border-none'}`}>
                           <SelectValue placeholder="Select Experience level" />
                         </SelectTrigger>
                       </FormControl>
@@ -133,9 +133,9 @@ const AddSkills = () => {
             </div>
 
             {/* skills */}
-            <div className="flex gap-5 flex-wrap max-h-[200px] overflow-y-auto">
+            <div className="flex gap-5 flex-wrap max-h-[120px] overflow-y-auto">
               {myskills.map((item,index)=>( 
-                <div key={index} className="flex justify-between items-center gap-2 text-[13px] border px-4 py-3 text-black/60 font-[300]">
+                <div key={index} className="flex justify-between items-center gap-2 text-[13px] border border-dashed border-black/30 px-4 py-3 text-black/60 bg-white font-[300]">
                      {`${item.skill} (${item.experience})`}
                     <IoMdClose onClick={()=>handleDelete(index)} className="text-xl text-black/70 cursor-pointer" />
                 </div>
@@ -145,7 +145,7 @@ const AddSkills = () => {
             <div className="flex flex-col gap-2 mt-5 w-[70%]">
               <Button
                 type="submit"
-                className="bg-[#f66136] w-fit rounded-sm text-white px-[50px] py-6"
+                className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] w-fit rounded-sm text-white px-[50px] py-6"
               >
                 Add <IoMdAdd />
               </Button>
@@ -155,14 +155,14 @@ const AddSkills = () => {
             <Button
              type="button"
              onClick={handleBackClick}
-             className="text-black border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
+             className="text-[#064048] border border-[#064048]/50 shadow-none hover:text-white bg-white rounded-sm px-[70px] py-6">
               BACK
             </Button>
             <Button 
               type="button"
               disabled={myskills.length === 0}
               onClick={handleNextClick}
-              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
+              className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] rounded-sm text-white px-[70px] py-6">
               NEXT
             </Button>
           </div>

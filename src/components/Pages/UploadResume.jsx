@@ -83,7 +83,7 @@ const UploadResume = () => {
           {/* Upload Resume Section */}
           <div
             {...getRootProps()}
-            className="flex flex-col w-full items-center justify-center border-[2.3px] border-black/30 border-dashed rounded-2xl"
+            className="flex flex-col w-full items-center justify-center bg-[#ffffff]  border-[2.3px] border-[#064048]/90 border-dashed rounded-2xl"
           >
             <input {...getInputProps()} />
             {isDragActive ? (
@@ -92,14 +92,14 @@ const UploadResume = () => {
               </div>
             ) : (
               <div className="flex flex-col gap-3 items-center justify-center px-12 py-9">
-                <LuCloudUpload className="text-[#f66136] text-3xl" />
+                <LuCloudUpload className="text-[#1790a0] text-3xl" />
                 <h1 className="font-[500] mt-2">
                   Choose a file or drag & drop it here
                 </h1>
                 <p className="text-black/50 text-sm text-nowrap">
                   Please Upload Your Resume (PDF, DOC formats only)
                 </p>
-                <Button className="text-black mt-3 border border-black/50 shadow-none hover:text-white bg-white rounded-sm px-[50px] py-6">
+                <Button className="mt-3 bg-[#064048] border border-black/50 shadow-none  rounded-sm px-[50px] py-6">
                   Browse File
                 </Button>
               </div>
@@ -111,7 +111,7 @@ const UploadResume = () => {
             resumes.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col gap-5 p-6 rounded-2xl bg-[#fff5f2]"
+                className="flex flex-col gap-5 p-6 rounded-2xl bg-[#f2fffc]"
               >
                 <div className="flex justify-between">
                   <div className="flex gap-3">
@@ -123,7 +123,7 @@ const UploadResume = () => {
                         <span className="text-black font-[300] flex items-center gap-1">
                           {item.status === "uploading" ? (
                             <>
-                              <TbLoader className="text-[#f66136] animate-spin" />
+                              <TbLoader className="text-[#003433] animate-spin" />
                               Uploading...
                             </>
                           ) : (
@@ -140,14 +140,14 @@ const UploadResume = () => {
                     <>
                       <IoMdCloseCircleOutline
                         onClick={() => dispatch(deleteResume(item.id))}
-                        className="text-[#f66136] cursor-pointer"
+                        className="text-[#003433] cursor-pointer"
                       />
                     </>
                   ) : (
                     <>
                       <MdDeleteForever
                         onClick={() => dispatch(deleteResume(item.id))}
-                        className="text-[#f66136] text-[30px] hover:bg-[#ffd3c7] rounded-sm p-1 cursor-pointer"
+                        className="text-[#d22e01] text-[30px] hover:bg-[#ffebe4] rounded-sm p-1 cursor-pointer"
                       />
                     </>
                   )}
@@ -157,7 +157,7 @@ const UploadResume = () => {
                 {item.status === "uploading" && (
                   <Progress
                     value={item.progress}
-                    className="[&>div]:bg-[#f66136]"
+                    className="[&>div]:bg-[#064048]"
                   />
                 )}
               </div>
@@ -166,7 +166,7 @@ const UploadResume = () => {
 
         <div className="flex flex-col justify-end">
           <Button
-            className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
+            className="bg-gradient-to-r from-[#064048] to-[#0b7583] hover:from-[#000000] hover:to-[#000000] rounded-sm text-white px-[70px] py-6"
             onClick={handleNextClick}
           >
             NEXT
