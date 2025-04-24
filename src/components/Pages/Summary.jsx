@@ -23,7 +23,9 @@ const Summary = () => {
   const myskills = useSelector((state) => state.form.skills);
   const myEducation = useSelector((state) => state.form.educations);
   const myInfo = useSelector((state) => state.form.basicInfo);
-
+  const resumes = useSelector((state) => state.form.resume);
+  console.log("resume",resumes);
+  
   const submitBasicInfo = () => {
     dispatch(setCurrentStep(6)); 
     navigate("/complete");
@@ -41,6 +43,17 @@ const Summary = () => {
     },
   });
 
+  const handleDownload = (fileItem) => {
+    const file = fileItem.file; 
+    const blobUrl = URL.createObjectURL(file);
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = file.name;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl); 
+  };
     
   return (
     <div className="flex flex-col gap-12 py-5 px-36">
@@ -55,10 +68,12 @@ const Summary = () => {
       <div className="flex gap-5 w-[70%]">
         <Label className="flex text-[13px] w-full text-black/60 font-[400] flex-col gap-2">
           File name
-          <h1 className="flex  items-center gap-2 text-[14px] font-[500] text-black">
-            RavikantCV.pdf
-            <MdOutlineFileDownload className="text-[#f66136] text-2xl cursor-pointer" />
-          </h1>
+          {resumes.map((item,index)=>(
+            <h1 key={index} className="flex  items-center gap-2 text-[14px] font-[500] text-black">
+              {item.name}
+              <MdOutlineFileDownload onClick={() => handleDownload(item)} className="text-[#f66136] text-2xl cursor-pointer" />
+            </h1>
+          ))}
         </Label>
       </div>
 
