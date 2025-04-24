@@ -264,6 +264,7 @@ const AddEducation = () => {
             <Button
               type="button"
               onClick={handleNextClick}
+              disabled={myEducation.length === 0}
               className="bg-[#f66136] rounded-sm text-white px-[70px] py-6"
             >
               NEXT

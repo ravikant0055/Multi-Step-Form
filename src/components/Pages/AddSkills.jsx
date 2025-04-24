@@ -159,9 +159,10 @@ const AddSkills = () => {
               BACK
             </Button>
             <Button 
-            type="button"
-            onClick={handleNextClick}
-            className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
+              type="button"
+              disabled={myskills.length === 0}
+              onClick={handleNextClick}
+              className="bg-[#f66136] rounded-sm text-white px-[70px] py-6">
               NEXT
             </Button>
           </div>

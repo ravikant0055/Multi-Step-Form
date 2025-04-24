@@ -1,25 +1,34 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { Button } from "../ui/button";
 import { LuCloudUpload } from "react-icons/lu";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import pdfimage from "../../assets/pdf.svg";
 import { TbLoader } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCurrentStep } from "../../store/formSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addResume, deleteResume, setCurrentStep, updateResumeProgress } from "../../store/formSlice";
 import { useDropzone } from "react-dropzone";
 import { ImUpload } from "react-icons/im";
 import { Progress } from "../ui/progress";
 import { PiCheckCircleFill } from "react-icons/pi";
 import { MdDeleteForever } from "react-icons/md";
+import { v4 as uuidv4 } from 'uuid';
 
 const UploadResume = () => {
-  const [store, setStore] = useState([]);
-
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const resumes = useSelector((state) => state.form.resume);
+
+  const errorRef = useRef(null);
 
   const handleNextClick = () => {
+    setFormSubmitted(true);
+    if (resumes.length === 0) {
+      errorRef.current?.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
     dispatch(setCurrentStep(2));
     navigate("/information");
   };
@@ -27,39 +36,36 @@ const UploadResume = () => {
   // Simulate upload progress
   const simulateUpload = (fileObj) => {
     let progress = 0;
-
+  
     const interval = setInterval(() => {
-      setStore((prev) =>
-        prev.map((item) =>
-          item.name === fileObj.name
-            ? {
-                ...item,
-                progress: Math.min(item.progress + 10, 100),
-                status: item.progress + 10 >= 100 ? "completed" : "uploading",
-              }
-            : item
-        )
-      );
-
       progress += 10;
-      if (progress >= 100) {
-        clearInterval(interval);
-      }
+  
+      dispatch(updateResumeProgress({
+        name: fileObj.name,
+        progress: Math.min(progress, 100),
+        status: progress >= 100 ? "completed" : "uploading",
+      }));
+  
+      if (progress >= 100) clearInterval(interval);
     }, 300);
   };
+  
 
   // Handle file drop
   const onDrop = useCallback((files) => {
     const filesWithMeta = files.map((file) => ({
+      id: uuidv4(),
       file,
       name: file.name,
       size: file.size,
       progress: 0,
       status: "uploading",
     }));
-
-    setStore(filesWithMeta);
-    filesWithMeta.forEach(simulateUpload);
+    // dispatch(addResume(filesWithMeta));
+    filesWithMeta.forEach(file => {
+      dispatch(addResume(file));
+      simulateUpload(file);
+    });
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
@@ -67,6 +73,11 @@ const UploadResume = () => {
   return (
     <div className="flex flex-col py-5 px-36">
       <h1 className="text-xl font-[500]">Upload Resume</h1>
+      {formSubmitted && resumes.length === 0 && (
+        <h1 ref={errorRef} className="text-red-500 text-sm font-[500] mt-3">
+          * Please upload your resume
+        </h1>
+      )}
       <div className="flex justify-between gap-2">
         <div className="flex w-[54%] flex-col gap-5 mt-10">
           {/* Upload Resume Section */}
@@ -96,9 +107,12 @@ const UploadResume = () => {
           </div>
 
           {/* Uploaded File Section */}
-          {store.length > 0 &&
-            store.map((item, index) => (
-              <div key={index} className="flex flex-col gap-5 p-6 rounded-2xl bg-[#fff5f2]">
+          {resumes.length > 0 &&
+            resumes.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col gap-5 p-6 rounded-2xl bg-[#fff5f2]"
+              >
                 <div className="flex justify-between">
                   <div className="flex gap-3">
                     <img src={pdfimage} alt="pdf" />
@@ -114,8 +128,8 @@ const UploadResume = () => {
                             </>
                           ) : (
                             <>
-                               <PiCheckCircleFill className="text-[#1ac54b] text-[16px]"/>
-                               Completed
+                              <PiCheckCircleFill className="text-[#1ac54b] text-[16px]" />
+                              Completed
                             </>
                           )}
                         </span>
@@ -123,19 +137,28 @@ const UploadResume = () => {
                     </div>
                   </div>
                   {item.status === "uploading" ? (
-                            <>
-                              <IoMdCloseCircleOutline onClick={()=>setStore([])} className="text-[#f66136] cursor-pointer" />
-                            </>
-                          ) : (
-                            <>
-                               <MdDeleteForever onClick={()=>setStore([])} className="text-[#f66136] text-[30px] hover:bg-[#ffd3c7] rounded-sm p-1 cursor-pointer"/>
-                            </>
+                    <>
+                      <IoMdCloseCircleOutline
+                        onClick={() => dispatch(deleteResume(item.id))}
+                        className="text-[#f66136] cursor-pointer"
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <MdDeleteForever
+                        onClick={() => dispatch(deleteResume(item.id))}
+                        className="text-[#f66136] text-[30px] hover:bg-[#ffd3c7] rounded-sm p-1 cursor-pointer"
+                      />
+                    </>
                   )}
                 </div>
 
                 {/* Show progress bar while uploading */}
                 {item.status === "uploading" && (
-                  <Progress value={item.progress} className="[&>div]:bg-[#f66136]" />
+                  <Progress
+                    value={item.progress}
+                    className="[&>div]:bg-[#f66136]"
+                  />
                 )}
               </div>
             ))}
