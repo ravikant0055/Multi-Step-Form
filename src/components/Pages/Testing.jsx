@@ -8,6 +8,7 @@ const Testing = () => {
     console.log(files);
   },[]);
 
+  
   const {getRootProps,getInputProps,isDragActive} = useDropzone({onDrop});
   return (
     <div>
